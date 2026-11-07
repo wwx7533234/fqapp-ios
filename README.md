@@ -24,6 +24,23 @@
 
 ![番茄小镇 iOS 首页](screenshots/home.jpg)
 
+## 下载未签名 IPA
+
+[**Releases → 未签名 IPA**](https://github.com/wwx7533234/fqapp-ios/releases/latest)
+
+发布页提供 **未签名 IPA**：`fqapp-ios-1.0.121-unsigned.ipa`。仓库和 Release 都**不包含**
+已签名版本、Apple 开发证书或描述文件；请使用你自己的 Apple ID 签名后安装。
+
+- 版本：**1.0.121 (126)**
+- 显示名称：**番茄小镇**
+- Bundle ID：`com.weixiaoxun.fqapp`（Sideloadly 请勾选 **Change Bundle ID**，或在 Xcode 里改成你自己的唯一 ID）
+- 最低系统：iOS 15
+- SHA256：`428726b5340d57c57b6c60511f54e20bb737199f498f4dce9c40d0b686367916`
+
+安装方式：**Sideloadly / AltStore / Xcode** 任选其一。免费 Apple ID 的签名有效期为 7 天，
+到期重新签名即可；不要删除 App，否则会丢失书架、进度和缓存。详细步骤见
+[`IOS_PORT.md`](IOS_PORT.md)。
+
 ## 这是什么
 
 这是把 fqapp 的 Flutter UI 与 Rust 核心真正编译到 iOS 的移植版，不是 Android 模拟器、
@@ -54,7 +71,7 @@
 ## 架构
 
 ```text
-┌──────────────────────────── iPhone (iOS 17+) ────────────────────────────┐
+┌──────────────────────────── iPhone (iOS 15+) ────────────────────────────┐
 │  Flutter/Dart UI (lib/)  ── Flutter iOS engine (Metal/Impeller)          │
 │        │ flutter_rust_bridge (FFI)                                       │
 │  fqapi_core.framework (Rust, arm64 iOS)                                  │
@@ -86,7 +103,7 @@ CENC 短剧/听书在 iOS 上的处理：`NativePlayer.create(url, keyHex)` 会�
 
 ### 前置
 
-- macOS + Xcode 27（iOS 17+ SDK）
+- macOS + Xcode 27（iOS 15+ SDK）
 - Flutter 3.47.x / Dart 3.13.x
 - Rust stable，安装 iOS 目标：
   ```bash
