@@ -1,0 +1,27 @@
+PODS:
+  - Flutter (1.0.0)
+  - flutter_secure_storage (6.0.0):
+    - Flutter
+  - fqapi_core (0.1.0)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
+  - fqapi_core (from `fqapi_core`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  flutter_secure_storage:
+    :path: ".symlinks/plugins/flutter_secure_storage/ios"
+  fqapi_core:
+    :path: fqapi_core
+
+SPEC CHECKSUMS:
+  Flutter: 71a624a5bc0c04062bf19101d501e466baf2fb47
+  flutter_secure_storage: d33dac7ae2ea08509be337e775f6b59f1ff45f12
+  fqapi_core: 79542fb6e8c59119f1911dc1e34c4b11d9251e9e
+
+PODFILE CHECKSUM: b27c8b464f57991b0c8ff7f13106bc1196154a0a
+
+COCOAPODS: 1.15.2
