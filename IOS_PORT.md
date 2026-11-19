@@ -158,13 +158,47 @@ dist/screenshots/                              （模拟器 + 真机运行截图
 ### 真机安装结果（验证记录，已移除本机个人信息）
 
 - 设备：iPhone（iOS 27 及以上），已配对并开启开发者模式
-- Bundle ID：`com.weixiaoxun.fqapp`（请改成你自己的唯一 ID）
+- Bundle ID：`com.weixiaoxun.tomatotown`（请改成你自己的唯一 ID）
 - 签名：Apple Development（本机 Personal Team）
 - 描述文件：免费账号 7 天有效；到期前重新运行安装脚本续签
 - 安装/启动命令：`./scripts/install_to_iphone.sh`
 - 到期续签：在同一台 Mac、同一 Apple ID 下重新执行上面的命令即可；
   覆盖安装不会清除 App 内的书架、进度和缓存（不要先删除 App）。
 - 注：`dist/` 下的 IPA、截图和签名材料只保存在本机，不随仓库发布。
+- 2026-11-18：原 `com.weixiaoxun.fqapp` 被 Apple 判定不可注册（App ID 冲突），
+  已改用 `com.weixiaoxun.tomatotown`；旧 App 的 shelf/history/read_time 数据已迁移，
+  新描述文件有效到 11 月 25 日。旧 App 已卸载，仅保留新 App。
+
+### 一键续签（本机）
+
+免费账号 7 天到期后，不需要 Agent，也不需要重新配置签名：
+
+1. **双击桌面上的「续签番茄小镇.app」**（实际应用在
+   `~/Applications/续签番茄小镇.app`）；
+2. 按提示先**解锁 iPhone 并保持亮屏**；
+3. 点“开始续签”后，窗口会实时显示 6 个步骤、总体进度和构建输出；
+   构建期间窗口保持响应，不再出现“未响应”；
+4. 程序自动完成 `pod install`（需要时）、Release 构建、自动签名、安装，
+   并尝试启动 App；完成后显示描述文件到期时间、信任步骤或“重试续签”；
+5. 若停在“待信任”，主按钮是“我已信任，重新检查”，点击后只做启动检查，
+   不会重新构建；也可随时打开 `~/Library/Logs/fqapp/` 看完整日志。
+
+终端等价入口：
+
+```bash
+cd ~/fqapp-master-ios
+./renew.command              # 双击友好的终端版
+./scripts/renew_fqapp.sh     # 纯脚本
+```
+
+如果移动了项目目录，或想重建桌面 App：
+
+```bash
+./scripts/build_renew_app.sh
+```
+
+前置条件：Mac 醒着、Xcode 仍登录着同一个 Apple ID、iPhone 已连接
+（USB 或同一 Wi-Fi）、iPhone 解锁。程序不依赖本 Agent，也不会上传签名材料。
 
 重新打包用 `scripts/package_ios_artifacts.sh`。
 

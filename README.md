@@ -33,9 +33,9 @@
 
 - 版本：**1.0.121 (126)**
 - 显示名称：**番茄小镇**
-- Bundle ID：`com.weixiaoxun.fqapp`（Sideloadly 请勾选 **Change Bundle ID**，或在 Xcode 里改成你自己的唯一 ID）
+- Bundle ID：`com.weixiaoxun.tomatotown`（Sideloadly 请勾选 **Change Bundle ID**，或在 Xcode 里改成你自己的唯一 ID）
 - 最低系统：iOS 15
-- SHA256：`428726b5340d57c57b6c60511f54e20bb737199f498f4dce9c40d0b686367916`
+- SHA256：`22509c21ebdd888ce91b8bf6bc39ce1b22dd1cad816811c55d5b2154f8b6a3df`
 
 安装方式：**Sideloadly / AltStore / Xcode** 任选其一。免费 Apple ID 的签名有效期为 7 天，
 到期重新签名即可；不要删除 App，否则会丢失书架、进度和缓存。详细步骤见
@@ -129,7 +129,7 @@ flutter build ios --simulator --debug
 
 1. 打开 `ios/Runner.xcworkspace`；
 2. Runner → Signing & Capabilities，勾选自动签名并选择你的 Team；
-3. 把 Bundle Identifier 改成你自己的唯一值（当前示例为 `com.weixiaoxun.fqapp`）；
+3. 把 Bundle Identifier 改成你自己的唯一值（当前示例为 `com.weixiaoxun.tomatotown`）；
 4. 连接 iPhone 后 Run。
 
 也可以使用 `scripts/install_to_iphone.sh`（需要本机 Xcode 已登录 Apple ID）：

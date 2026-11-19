@@ -3,8 +3,9 @@
 # iPhone. Requires an Apple ID signed into Xcode → Settings → Accounts.
 #
 # Usage:
-#   ./scripts/install_to_iphone.sh --check     # only report device/signing state
-#   ./scripts/install_to_iphone.sh             # build, sign, install, launch
+#   ./scripts/install_to_iphone.sh --check       # only report device/signing state
+#   ./scripts/install_to_iphone.sh --launch-only # only launch the installed app
+#   ./scripts/install_to_iphone.sh               # build, sign, install, launch
 #
 # Optional overrides:
 #   TEAM_ID=XXXXXXXXXX   (defaults to the Apple Development identity)
@@ -12,12 +13,21 @@
 #   DEVICE_UDID=00008150-...
 set -euo pipefail
 
+# Finder/AppleScript launches may not inherit a UTF-8 locale; Xcode tooling and
+# CocoaPods both expect one.
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+
 APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-BUNDLE_ID="${BUNDLE_ID:-com.weixiaoxun.fqapp}"
+BUNDLE_ID="${BUNDLE_ID:-com.weixiaoxun.tomatotown}"
 TEAM_ID="${TEAM_ID:-}"
 DEVICE_UDID="${DEVICE_UDID:-}"
 CHECK_ONLY=0
-[ "${1:-}" = "--check" ] && CHECK_ONLY=1
+LAUNCH_ONLY=0
+case "${1:-}" in
+  --check) CHECK_ONLY=1 ;;
+  --launch-only) LAUNCH_ONLY=1 ;;
+esac
 
 FLUTTER="${FLUTTER:-$HOME/flutter/flutter/bin/flutter}"
 if [ ! -x "$FLUTTER" ]; then
@@ -66,11 +76,13 @@ if [ "$RUNNER_ID" != "$BUNDLE_ID" ]; then
   echo "请先改 Runner target 的 PRODUCT_BUNDLE_IDENTIFIER（不要用全局命令行覆盖，会把 Pods 框架的 ID 也改掉）。" >&2
   exit 3
 fi
+if [ "$LAUNCH_ONLY" -eq 1 ]; then
+  echo "==> 启动 番茄小镇..."
+  xcrun devicectl device process launch --device "$DEVICE_UDID" "$BUNDLE_ID"
+  exit $?
+fi
+
 echo "Team ID   : ${TEAM_ID:-（未找到 Apple Development 证书）}"
-echo "设备状态  :"
-xcrun devicectl list devices --verbose 2>/dev/null \
-  | grep -E "marketingName|developerModeStatus|pairingState|ddiServicesAvailable" \
-  | sed 's/^ */  /' | head -8
 
 if [ -z "$TEAM_ID" ]; then
   echo
@@ -91,6 +103,7 @@ xcodebuild \
   -scheme Runner \
   -configuration Release \
   -destination "id=$DEVICE_UDID" \
+  -destination-timeout 45 \
   -derivedDataPath "$APP_DIR/build/device" \
   -allowProvisioningUpdates \
   -allowProvisioningDeviceRegistration \
@@ -110,9 +123,9 @@ codesign --verify --deep --strict --verbose=2 "$APP"
 echo "==> 安装到 iPhone..."
 xcrun devicectl device install app --device "$DEVICE_UDID" "$APP"
 
-echo "==> 启动 fqapp..."
+echo "==> 启动 番茄小镇..."
 xcrun devicectl device process launch --device "$DEVICE_UDID" "$BUNDLE_ID" || {
-  echo "App 已安装但未能自动启动；请在 iPhone 上手动打开 fqapp。" >&2
+  echo "App 已安装但未能自动启动；请在 iPhone 上手动打开“番茄小镇”。" >&2
 }
 
 echo
