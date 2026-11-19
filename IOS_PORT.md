@@ -208,3 +208,8 @@ cd ~/fqapp-master-ios
 
 原项目为 GPL-3.0，内容来自第三方公开接口。请仅用于个人学习研究，不要上架 App Store
 或分发内容资源。
+
+### 换 Bundle ID 后数据恢复
+
+换 Bundle ID 会改变 iOS Keychain access group，旧 Hive 密钥可能读不到。
+如果已有书架/浏览记录，先备份旧容器再换 ID；恢复步骤见 [RECOVERY.md](RECOVERY.md)。

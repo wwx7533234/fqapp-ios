@@ -37,6 +37,9 @@
 - 最低系统：iOS 15
 - SHA256：`22509c21ebdd888ce91b8bf6bc39ce1b22dd1cad816811c55d5b2154f8b6a3df`
 
+> **换 Bundle ID 前请先备份。** Bundle ID 同时决定 iOS Keychain 的访问组；
+> 换 ID 后旧书架/历史可能读不到。恢复步骤见 [RECOVERY.md](RECOVERY.md)。
+
 安装方式：**Sideloadly / AltStore / Xcode** 任选其一。免费 Apple ID 的签名有效期为 7 天，
 到期重新签名即可；不要删除 App，否则会丢失书架、进度和缓存。详细步骤见
 [`IOS_PORT.md`](IOS_PORT.md)。
